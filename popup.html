@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #00ff88;
+      --green-dim: #00cc6a;
+      --green-dark: #003322;
+      --bg: #050910;
+      --bg2: #080d14;
+      --bg3: #0d1520;
+      --border: #0a2a1a;
+      --border2: #0f3a24;
+      --red: #ff3355;
+      --yellow: #ffcc00;
+      --orange: #ff8800;
+      --mono: 'Share Tech Mono', monospace;
+      --orb: 'Orbitron', sans-serif;
+    }
+
+    body {
+      width: 420px;
+      max-height: 580px;
+      overflow-y: auto;
+      font-family: var(--mono);
+      font-size: 11px;
+      background: var(--bg);
+      color: var(--green);
+      scrollbar-width: thin;
+      scrollbar-color: var(--green-dark) transparent;
+    }
+
+    body::-webkit-scrollbar { width: 4px; }
+    body::-webkit-scrollbar-thumb { background: var(--green-dark); }
+
+    /* Scan line overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,255,136,0.015) 2px,
+        rgba(0,255,136,0.015) 4px
+      );
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px 8px;
+      border-bottom: 1px solid var(--border2);
+      background: var(--bg2);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-icon {
+      width: 22px;
+      height: 22px;
+      background: var(--green);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--bg);
+      font-weight: bold;
+    }
+
+    .logo-text {
+      font-family: var(--orb);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .header-right {
+      text-align: right;
+    }
+
+    .url-label {
+      font-size: 9px;
+      color: #1a5c3a;
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      margin-right: 4px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Score */
+    .score-box {
+      padding: 16px 14px 12px;
+      border-bottom: 1px solid var(--border2);
+      background: var(--bg2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .score-box::after {
+      content: 'PRIVACY_SCORE';
+      position: absolute;
+      right: 12px;
+      top: 8px;
+      font-size: 8px;
+      color: #0a2a1a;
+      letter-spacing: 2px;
+      font-family: var(--orb);
+    }
+
+    .score-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .score-num {
+      font-family: var(--orb);
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1;
+      text-shadow: 0 0 20px currentColor;
+    }
+
+    .score-meta {
+      padding-bottom: 4px;
+    }
+
+    .score-grade {
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .score-bar-wrap {
+      margin-top: 10px;
+      height: 3px;
+      background: var(--border2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .score-bar {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.5s ease;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+    }
+
+    .green-col  { color: var(--green); }
+    .yellow-col { color: var(--yellow); }
+    .orange-col { color: var(--orange); }
+    .red-col    { color: var(--red); }
+
+    /* Seções */
+    .section {
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px 6px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .section-header:hover { background: var(--bg3); }
+
+    .section-title {
+      font-family: var(--orb);
+      font-size: 8px;
+      letter-spacing: 2px;
+      color: #1a6640;
+    }
+
+    .section-body {
+      padding: 8px 14px;
+    }
+
+    /* Badge */
+    .badge {
+      font-family: var(--orb);
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 2px;
+      border: 1px solid currentColor;
+      letter-spacing: 1px;
+    }
+    .badge-safe   { color: var(--green);  border-color: var(--green-dark); }
+    .badge-warn   { color: var(--yellow); border-color: #332200; }
+    .badge-danger { color: var(--red);    border-color: #330011; }
+
+    /* Tags */
+    .tag-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      max-height: 80px;
+      overflow-y: auto;
+    }
+
+    .tag {
+      font-size: 9px;
+      padding: 2px 7px;
+      border: 1px solid var(--border2);
+      border-radius: 2px;
+      color: #33aa66;
+      background: #020a05;
+      white-space: nowrap;
+    }
+    .tag.danger { border-color: #330011; color: var(--red); background: #0a0005; }
+    .tag.warn   { border-color: #332200; color: var(--yellow); background: #0a0800; }
+    .tag.fp     { border-color: #1a1a60; color: #6699ff; background: #010120; }
+
+    /* Stats grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .stat {
+      background: var(--bg2);
+      border: 1px solid var(--border2);
+      border-radius: 3px;
+      padding: 6px 4px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: var(--orb);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--green);
+      text-shadow: 0 0 8px var(--green);
+      line-height: 1;
+    }
+
+    .stat-lbl {
+      font-size: 8px;
+      color: #1a5c3a;
+      margin-top: 3px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Prompt terminal */
+    .prompt {
+      color: #1a5c3a;
+      font-size: 10px;
+      padding: 6px 14px;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .prompt::before {
+      content: '> _';
+      color: var(--green);
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .empty { color: #0f3a24; font-size: 10px; font-style: italic; }
+
+    /* Scrollbar nas listas */
+    .tag-grid::-webkit-scrollbar { width: 3px; }
+    .tag-grid::-webkit-scrollbar-thumb { background: var(--border2); }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon">⬡</div>
+      <span class="logo-text">Privacy Monitor</span>
+    </div>
+    <div class="header-right">
+      <div style="font-size:9px;color:#1a5c3a;margin-bottom:2px">
+        <span class="status-dot"></span>ACTIVE
+      </div>
+      <div class="url-label" id="url-label">—</div>
+    </div>
+  </div>
+
+  <!-- Score -->
+  <div class="score-box">
+    <div class="score-row">
+      <div class="score-num green-col" id="score">--</div>
+      <div class="score-meta">
+        <div class="score-grade" id="score-grade">ANALYZING...</div>
+        <div style="font-size:9px;color:#1a5c3a;margin-top:4px">/100</div>
+      </div>
+    </div>
+    <div class="score-bar-wrap">
+      <div class="score-bar" id="score-bar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- Terceiros -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">[ THIRD-PARTY DOMAINS ]</span>
+      <span class="badge badge-safe" id="tp-badge">0</span>
+    </div>
+    <div class="section-body">
+      <div class="tag-grid" id="third-party">
+        <span class="empty">// none detected</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cookies -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">[ COOKIES ]</span>
+      <span class="badge badge-safe" id="cookie-badge">0</span>
+    </div>
+    <div class="section-body">
+      <div class="stats-grid">
+        <div class="stat"><div class="stat-num" id="c-total">0</div><div class="stat-lbl">TOTAL</div></div>
+        <div class="stat"><div class="stat-num" id="c-third">0</div><div class="stat-lbl">3RD PTY</div></div>
+        <div class="stat"><div class="stat-num" id="c-session">0</div><div class="stat-lbl">SESSION</div></div>
+        <div class="stat"><div class="stat-num" id="c-persist">0</div><div class="stat-lbl">PERSIST</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supercookies -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">[ SUPERCOOKIES · ETAG / HSTS ]</span>
+      <span class="badge badge-safe" id="sc-badge">0</span>
+    </div>
+    <div class="section-body">
+      <div class="tag-grid" id="supercookies">
+        <span class="empty">// none detected</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fingerprinting -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">[ FINGERPRINTING VECTORS ]</span>
+      <span class="badge badge-safe" id="fp-badge">0</span>
+    </div>
+    <div class="section-body">
+      <div class="tag-grid" id="fingerprint">
+        <span class="empty">// none detected</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Storage -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">[ WEB STORAGE + INDEXEDDB ]</span>
+    </div>
+    <div class="section-body">
+      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat"><div class="stat-num" id="s-ls">0</div><div class="stat-lbl">LOCAL</div></div>
+        <div class="stat"><div class="stat-num" id="s-ss">0</div><div class="stat-lbl">SESSION</div></div>
+        <div class="stat"><div class="stat-num" id="s-idb">0</div><div class="stat-lbl">INDEXEDDB</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hijacking -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">[ HIJACK THREATS ]</span>
+      <span class="badge badge-safe" id="hijack-badge">0</span>
+    </div>
+    <div class="section-body">
+      <div class="tag-grid" id="hijack-list">
+        <span class="empty">// none detected</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Terminal prompt -->
+  <div class="prompt" id="status-prompt">scanning complete</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -6,8 +6,7 @@
   "icons": { "48": "icons/icon48.png", "96": "icons/icon96.png" },
   "browser_action": {
     "default_popup": "popup.html",
-    "default_icon": "icons/icon48.png",
-    "default_badge_text": ""
+    "default_icon": "icons/icon48.png"
   },
   "background": { "scripts": ["background.js"] },
   "content_scripts": [{
@@ -21,9 +20,5 @@
     "cookies", "storage",
     "tabs", "activeTab",
     "<all_urls>"
-  ],
-  "data_collection_permissions": {
-    "collects_website_data": true,
-    "purpose": "Privacy analysis only, no data leaves the browser"
-  }
+  ]
 }
