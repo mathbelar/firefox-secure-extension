@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Privacy Monitor",
+  "name": "Secure monitor",
   "version": "1.0",
   "description": "Detecta rastreamento e ameaças à privacidade",
   "icons": { "48": "icons/icon48.png", "96": "icons/icon96.png" },
