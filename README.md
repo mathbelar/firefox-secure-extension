@@ -1,13 +1,5 @@
 # firefox-secure-extension
 
-Extensão validada em ambiente controlado
-
-# Privacy Monitor
-
-Extensão para Firefox que detecta e exibe ameaças à privacidade durante a navegação web.
-
----
-
 ## Funcionalidades
 
 - **Domínios de terceira parte** — lista todos os domínios externos contactados e o tipo de recurso (script, imagem, iframe, etc.)

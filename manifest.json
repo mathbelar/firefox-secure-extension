@@ -11,7 +11,7 @@
   "background": { "scripts": ["background.js"] },
   "content_scripts": [{
     "matches": ["<all_urls>"],
-    "js": ["privacy_monitor.js"],
+    "js": ["secure_monitor.js"],
     "run_at": "document_start",
     "all_frames": true
   }],

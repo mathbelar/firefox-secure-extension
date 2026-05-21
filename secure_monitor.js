@@ -1,7 +1,3 @@
-// ============================================================
-// privacy_monitor.js — Content Script
-// Roda em document_start em todas as páginas
-// ============================================================
 
 
 function auditStorage() {
