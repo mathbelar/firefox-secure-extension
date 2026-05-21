@@ -31,14 +31,13 @@
 privacy-monitor/
 ├── manifest.json         # Configuração da extensão
 ├── background.js         # Service worker: captura requisições, cookies, supercookies
-├── privacy_monitor.js    # Content script: storage, fingerprinting, hijacking
+├── secure_monitor.js    # Content script: storage, fingerprinting, hijacking
 ├── popup.html            # Interface visual do popup
 ├── popup.js              # Lógica do popup
 ├── icons/
 │   ├── icon48.png
 │   └── icon96.png
 ├── README.md             # Este arquivo
-└── validacao.txt         # Data de início do desenvolvimento
 ```
 
 ---
@@ -46,7 +45,7 @@ privacy-monitor/
 ## Como usar
 
 1. Acesse qualquer site no Firefox
-2. Clique no ícone do **Privacy Monitor** na barra de ferramentas
+2. Clique no ícone do **Secure MOnitor** na barra de ferramentas
 3. O popup exibe:
    - **Privacy Score** — pontuação de 0 (péssimo) a 100 (ótimo)
    - Domínios de terceira parte detectados
@@ -104,5 +103,3 @@ O Privacy Score começa em **100 pontos** e desconta conforme as ameaças detect
 
 - [MDN WebExtensions](https://developer.mozilla.org/pt-BR/docs/Mozilla/Add-ons/WebExtensions)
 - [webRequest API](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/webRequest)
-- [Cover Your Tracks (EFF)](https://coveryourtracks.eff.org)
-- [Am I Unique?](https://amiunique.org)
